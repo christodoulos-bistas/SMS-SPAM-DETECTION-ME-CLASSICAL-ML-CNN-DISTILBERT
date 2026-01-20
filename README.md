@@ -1,41 +1,31 @@
-# Spam SMS Detection — NLP Assignment (Baseline, CNN, DistilBERT)
+# SMS Spam Detection — NLP Assignment (Baseline, CNN, DistilBERT)
 
-This project tackles **SMS spam detection** (binary text classification):  
+This repository contains my NLP assignment for **SMS spam detection** (binary text classification):  
 **ham (0)** vs **spam (1)**.
 
-I implement and compare three approaches under the same evaluation protocol:
+I implement and compare three models under the same data split and evaluation protocol:
 
-- **Baseline:** TF-IDF (word n-grams) + LinearSVC  
-- **CNN:** Text CNN (Embedding → Conv1D → Pooling → Dense)  
+- **Baseline (Classical ML):** TF-IDF (word n-grams) + LinearSVC  
+- **Deep Learning:** CNN for text classification  
 - **Transformer:** DistilBERT fine-tuning for sequence classification  
 
-The repository also includes **visualizations** (Confusion Matrices, ROC Curves, CNN learning curve), **error analysis** (FP/FN examples), and **interpretability** (LIME for the baseline).
+The repo also includes **evaluation metrics**, **plots** (Confusion Matrix, ROC curve, learning curve), and **error analysis** (False Positives / False Negatives examples).
 
 ---
 
-## Contents
-
-- `notebooks/`
-  - `data.ipynb` — data preparation / splits
-  - `baseline.ipynb` — TF-IDF + LinearSVC training & evaluation
-  - `deep_cnn.ipynb` — CNN training & evaluation
-  - `transformer_distilbert.ipynb` — DistilBERT fine-tuning & evaluation
-  - `error_analysis.ipynb` — FP/FN analysis + interpretability outputs
-- `data/` — cleaned dataset + saved split indices (or download instructions)
-- `results/` — metrics, plots, and saved artifacts (CSV/PNG/HTML)
-
-> If your repo uses a slightly different structure, update the section titles accordingly.
-
+## Repository Structure
 ---
 
 ## Dataset
 
-Expected format (after cleaning):
+The code expects a cleaned CSV in `data/` with columns:
+- `text` (string)
+- `label` (int: 0=ham, 1=spam)
 
-- `data/sms_clean.csv` with columns: `text`, `label` where `label ∈ {0,1}`
-- `data/split_idx.npz` containing `train_idx`, `val_idx`, `test_idx`
+and a saved split file (e.g. `split_idx.npz`) with:
+- `train_idx`, `val_idx`, `test_idx`
 
-If the dataset is not stored in the repository, run `notebooks/data.ipynb` to generate the cleaned file and splits (or follow the dataset download steps described there).
+> If the dataset is not included in the repo, run `data.ipynb` to prepare it (or add the dataset manually into `data/` following the notebook instructions).
 
 ---
 
@@ -43,5 +33,42 @@ If the dataset is not stored in the repository, run `notebooks/data.ipynb` to ge
 
 Create an environment and install dependencies:
 
-```bash
-pip install -r requirements.txt
+
+How to Run
+
+Suggested order:
+	1.	Data preparation
+	•	Run: data.ipynb
+	•	Output: cleaned dataset + split indices inside data/
+	2.	Baseline model
+	•	Run: baseline.ipynb
+	•	Output: metrics/plots saved under metrics/ and plots/
+	3.	CNN model
+	•	Run: deep_cnn.ipynb
+	•	Output: metrics/plots (+ optional saved model) under metrics/, plots/, error_analysis/
+	4.	DistilBERT
+	•	Run: transformer_distilbert.ipynb
+	•	Output: metrics/plots and checkpoint info under metrics/, plots/, error_analysis/
+	5.	Error analysis
+	•	Run: error_analysis.ipynb
+	•	Output: FP/FN CSV files and interpretability outputs under error_analysis/
+
+  Evaluation
+
+Because the dataset is imbalanced, evaluation focuses on:
+	•	Accuracy
+	•	Precision / Recall / F1-score for the spam class
+	•	ROC-AUC
+	•	Confusion Matrix and ROC curve plots
+
+Metrics are saved in metrics/ and key plots in plots/.
+
+Results
+
+Produced artifacts (examples):
+	•	Metrics (CSV): metrics/*_metrics_*.csv
+	•	Plots (PNG): plots/*confusion_matrix*.png, plots/*roc_curve*.png, plots/*learning*.png
+	•	Error analysis: error_analysis/*false_positives*.csv, error_analysis/*false_negatives*.csv
+	•	Interpretability (optional): error_analysis/lime_*.html
+
+  
