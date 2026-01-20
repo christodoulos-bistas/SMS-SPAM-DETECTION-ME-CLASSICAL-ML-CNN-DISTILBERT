@@ -23,8 +23,6 @@ The repository also includes **visualizations** (Confusion Matrices, ROC Curves,
   - `error_analysis.ipynb` — FP/FN analysis + interpretability outputs
 - `data/` — cleaned dataset + saved split indices (or download instructions)
 - `results/` — metrics, plots, and saved artifacts (CSV/PNG/HTML)
-- `report/` — final report document
-- `slides/` — presentation deck
 
 > If your repo uses a slightly different structure, update the section titles accordingly.
 
